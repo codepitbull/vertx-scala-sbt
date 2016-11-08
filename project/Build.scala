@@ -3,27 +3,18 @@ import sbt.Keys._
 import sbt._
 import sbtassembly.AssemblyPlugin.autoImport._
 import sbtassembly.PathList
-//import org.scalafmt.sbt.ScalaFmtPlugin
-//import org.scalafmt.sbt.ScalaFmtPlugin.autoImport._
-
-//ScalaFmt deactivated due to https://github.com/sbt/sbt/issues/2786
 
 object Build extends AutoPlugin {
-
-//  override def requires = ScalaFmtPlugin
 
   override def trigger = allRequirements
 
   override def projectSettings =
-//    reformatOnCompileSettings ++
     Vector(
       resolvers ++= Seq {
         "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
         "Sonatype SNAPSHOTS" at "https://oss.sonatype.org/content/repositories/snapshots/"
       },
-      version := version.in(ThisBuild).value, 
       scalaVersion := Version.Scala,
-      crossScalaVersions := Vector(scalaVersion.value),
       scalacOptions ++= Vector(
         "-unchecked",
         "-deprecation",
@@ -34,16 +25,6 @@ object Build extends AutoPlugin {
       mainClass := Some("io.vertx.core.Launcher"),
       unmanagedSourceDirectories in Compile := Vector(scalaSource.in(Compile).value),
       unmanagedSourceDirectories in Test := Vector(scalaSource.in(Test).value),
-      initialCommands := """|import io.vertx.lang.scala._
-                           |import io.vertx.scala.core._
-                           |import io.vertx.scala.sbt._
-                           |import scala.concurrent.Future
-                           |import scala.concurrent.Promise
-                           |import scala.util.Success
-                           |import scala.util.Failure
-                           |val vertx = Vertx.vertx
-                           |implicit val executionContext = io.vertx.lang.scala.VertxExecutionContext(vertx.getOrCreateContext)
-                           |""".stripMargin,
       assemblyMergeStrategy in assembly := {
         case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
         case PathList("META-INF", xs @ _*) => MergeStrategy.last
@@ -53,8 +34,5 @@ object Build extends AutoPlugin {
           val oldStrategy = (assemblyMergeStrategy in assembly).value
           oldStrategy(x)
       }
-
-//      formatSbtFiles := false,
-//      scalafmtConfig := Some(baseDirectory.in(ThisBuild).value / ".scalafmt.conf")
     )
 }
