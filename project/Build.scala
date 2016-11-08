@@ -1,17 +1,21 @@
-import org.scalafmt.sbt.ScalaFmtPlugin
+//import org.scalafmt.sbt.ScalaFmtPlugin
 import sbt.Keys._
 import sbt._
 import sbtassembly.AssemblyPlugin.autoImport._
 import sbtassembly.PathList
+//import org.scalafmt.sbt.ScalaFmtPlugin
+//import org.scalafmt.sbt.ScalaFmtPlugin.autoImport._
+
+//ScalaFmt deactivated due to https://github.com/sbt/sbt/issues/2786
 
 object Build extends AutoPlugin {
 
-  override def requires = ScalaFmtPlugin
+//  override def requires = ScalaFmtPlugin
 
   override def trigger = allRequirements
 
   override def projectSettings =
-    ScalaFmtPlugin.autoImport.reformatOnCompileSettings ++
+//    reformatOnCompileSettings ++
     Vector(
       resolvers ++= Seq {
         "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
@@ -48,8 +52,9 @@ object Build extends AutoPlugin {
         case x =>
           val oldStrategy = (assemblyMergeStrategy in assembly).value
           oldStrategy(x)
-      },
+      }
 
-      ScalaFmtPlugin.autoImport.scalafmtConfig := Some(baseDirectory.in(ThisBuild).value / ".scalafmt")
+//      formatSbtFiles := false,
+//      scalafmtConfig := Some(baseDirectory.in(ThisBuild).value / ".scalafmt.conf")
     )
 }

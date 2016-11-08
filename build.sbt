@@ -12,6 +12,3 @@ libraryDependencies ++= Vector (
 
 packageOptions += ManifestAttributes(
   ("Main-Verticle", "scala:io.vertx.scala.sbt.DemoVerticle"))
-
-
-
