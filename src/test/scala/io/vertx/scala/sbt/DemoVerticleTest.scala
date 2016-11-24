@@ -4,11 +4,11 @@ import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import org.scalatest._
 
-import scala.concurrent.Await
+import scala.concurrent.{Await, Promise}
 import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
-class TestVerticleTest extends AsyncFunSuite {
+class DemoVerticleTest extends FunSuite {
   val vertx = Vertx.vertx
   implicit val vertxExecutionContext = VertxExecutionContext(
     vertx.getOrCreateContext()
@@ -16,19 +16,19 @@ class TestVerticleTest extends AsyncFunSuite {
 
   Await.result(
     vertx
-      .deployVerticleFuture("scala:" + classOf[TestVerticle].getName)
+      .deployVerticleFuture("scala:" + classOf[DemoVerticle].getName)
       .andThen {
         case Success(d) => d
         case Failure(t) => throw new RuntimeException(t)
       },
-    10 millis
+    1000 millis
   )
 
-  test("TestVerticle should reply to a message") {
-    vertx
-      .eventBus()
-      .sendFuture[String]("testAddress", "msg")
-      .map(res => assert(res.body() == "Hello World!"))
+  test("DemoVerticle should bind to 8666 and answer with 'world'") {
+    val promise = Promise[String]
+    vertx.createHttpClient()
+        .getNow(8666, "127.0.0.1", "/hello", r => r.bodyHandler(body => promise.complete(Success(body.toString()))))
+    promise.future.map(res => assert(res == "hello"))
   }
 
 }
