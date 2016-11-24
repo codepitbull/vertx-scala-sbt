@@ -11,6 +11,7 @@ scalaVersion := "2.12.0"
 libraryDependencies ++= Vector (
   Library.vertxLangScala,
   Library.vertxCodegen,
+  Library.vertxWeb,
   Library.scalaTest       % "test"
 )
 

@@ -11,8 +11,8 @@ object Build extends AutoPlugin {
   override def projectSettings =
     Vector(
       resolvers ++= Seq {
+        Resolver.mavenLocal
         "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
-        "Sonatype SNAPSHOTS" at "https://oss.sonatype.org/content/repositories/snapshots/"
       },
       scalaVersion := Version.Scala,
       scalacOptions ++= Vector(
