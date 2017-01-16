@@ -18,10 +18,10 @@ class DemoVerticle extends ScalaVerticle {
 
     vertx
       .createHttpServer()
-      .requestHandler(router.accept _)
+      .requestHandler(a => a.response().end("Hello World"))
       .listenFuture(8666)
       .andThen{
-        case Success(_) => startPromise.success()
+        case Success(_) => startPromise.success(())
         case Failure(t) => startPromise.failure(t)
       }
 

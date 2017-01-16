@@ -1,4 +1,3 @@
-//import org.scalafmt.sbt.ScalaFmtPlugin
 import sbt.Keys._
 import sbt._
 import sbtassembly.AssemblyPlugin.autoImport._
@@ -10,9 +9,10 @@ object Build extends AutoPlugin {
 
   override def projectSettings =
     Vector(
-      resolvers ++= Seq {
-        "Sonatype SNAPSHOTS" at "https://oss.sonatype.org/content/repositories/snapshots/"
-      },
+      resolvers ++= Vector(
+//        "Sonatype SNAPSHOTS" at "https://oss.sonatype.org/content/repositories/snapshots/",
+        "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+      ),
       scalaVersion := Version.Scala,
       scalacOptions ++= Vector(
         "-unchecked",
@@ -23,15 +23,7 @@ object Build extends AutoPlugin {
       ),
       mainClass := Some("io.vertx.core.Launcher"),
       unmanagedSourceDirectories in Compile := Vector(scalaSource.in(Compile).value),
-      unmanagedSourceDirectories in Test := Vector(scalaSource.in(Test).value),
-      assemblyMergeStrategy in assembly := {
-        case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
-        case PathList("META-INF", xs @ _*) => MergeStrategy.last
-        case PathList("META-INF", "io.netty.versions.properties") => MergeStrategy.last
-        case PathList("codegen.json") => MergeStrategy.discard
-        case x =>
-          val oldStrategy = (assemblyMergeStrategy in assembly).value
-          oldStrategy(x)
-      }
+      unmanagedSourceDirectories in Test := Vector(scalaSource.in(Test).value)
+
     )
 }

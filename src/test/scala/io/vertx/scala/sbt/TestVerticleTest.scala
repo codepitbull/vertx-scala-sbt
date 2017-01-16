@@ -21,7 +21,7 @@ class TestVerticleTest extends AsyncFunSuite {
         case Success(d) => d
         case Failure(t) => throw new RuntimeException(t)
       },
-    10 millis
+    10000 millis
   )
 
   test("TestVerticle should reply to a message") {
