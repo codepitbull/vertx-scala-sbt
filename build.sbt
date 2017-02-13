@@ -10,7 +10,7 @@ libraryDependencies ++= Vector (
 )
 
 packageOptions += ManifestAttributes(
-  ("Main-Verticle", "scala:io.vertx.scala.sbt.DemoVerticle"))
+  ("Main-Verticle", "scala:io.vertx.scala.sbt.HttpVerticle"))
 
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard

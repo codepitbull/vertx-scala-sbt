@@ -6,17 +6,21 @@ import io.vertx.scala.ext.web.Router
 import scala.concurrent.{Future, Promise}
 import scala.util.{Failure, Success}
 
-class DemoVerticle extends ScalaVerticle {
+class HttpVerticle extends ScalaVerticle {
 
 
   override def start(): Future[Unit] = {
     val promise = Promise[Unit]
+
+    //Create a router to answer GET-requests to "/hello" with "world"
     val router = Router.router(vertx)
-    router.get("/hello").handler(_.response().end("world"))
+    val route = router
+      .get("/hello")
+        .handler(_.response().end("world"))
 
     vertx
       .createHttpServer()
-      .requestHandler(a => a.response().end("Hello World"))
+      .requestHandler(router.accept)
       .listenFuture(8666)
       .andThen{
         case Success(_) => promise.success(())

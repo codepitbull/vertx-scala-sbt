@@ -5,7 +5,7 @@ import io.vertx.lang.scala.ScalaVerticle
 import scala.concurrent.{Future, Promise}
 import scala.util.{Failure, Success}
 
-class TestVerticle extends ScalaVerticle {
+class BusVerticle extends ScalaVerticle {
 
   override def start(): Future[Unit] = {
     val promise = Promise[Unit]
