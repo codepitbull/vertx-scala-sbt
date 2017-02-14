@@ -1,6 +1,6 @@
 #Getting vertx-lang-scala
 
-The current version in master is deployed as SNAPSHOTS in a sonatype repo (which is the default one configured fir this build)
+It's in Maven central, current version is 3.4.0.Beta1.
 
 #Work with this project
 
