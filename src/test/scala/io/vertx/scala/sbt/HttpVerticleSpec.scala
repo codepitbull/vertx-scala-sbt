@@ -18,9 +18,7 @@ class HttpVerticleSpec extends VerticleTesting[HttpVerticle] with Matchers {
           r.bodyHandler(b => promise.success(b.toString))
         })
 
-    val res = Await.result(promise.future, 1 second)
-
-    res should equal("world")
+    promise.future.map(res => res should equal("world"))
   }
 
 }

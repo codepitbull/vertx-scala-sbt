@@ -8,16 +8,10 @@ import scala.util.{Failure, Success}
 class BusVerticle extends ScalaVerticle {
 
   override def start(): Future[Unit] = {
-    val promise = Promise[Unit]
     vertx
       .eventBus()
       .consumer[String]("testAddress")
       .handler(_.reply("Hello World!"))
       .completionFuture()
-      .andThen {
-        case Success(_) => promise.success(())
-        case Failure(t) => promise.failure(t)
-      }
-    promise.future
   }
 }

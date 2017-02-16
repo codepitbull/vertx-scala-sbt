@@ -1,4 +1,9 @@
 import sbt.Package._
+import sbt._
+enablePlugins(DockerPlugin, JavaAppPackaging)
+
+dockerBaseImage := "frolvlad/alpine-oraclejdk8:slim"
+version in Docker := "latest"
 
 scalaVersion := "2.12.1"
 

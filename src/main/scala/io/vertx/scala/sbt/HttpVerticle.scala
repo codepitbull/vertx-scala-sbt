@@ -10,8 +10,6 @@ class HttpVerticle extends ScalaVerticle {
 
 
   override def start(): Future[Unit] = {
-    val promise = Promise[Unit]
-
     //Create a router to answer GET-requests to "/hello" with "world"
     val router = Router.router(vertx)
     val route = router
@@ -22,11 +20,6 @@ class HttpVerticle extends ScalaVerticle {
       .createHttpServer()
       .requestHandler(router.accept)
       .listenFuture(8666)
-      .andThen{
-        case Success(_) => promise.success(())
-        case Failure(t) => promise.failure(t)
-      }
-
-    promise.future
+        .map(_ => ())
   }
 }

@@ -9,14 +9,11 @@ import scala.util.{Failure, Success}
 class BusVerticleSpec extends VerticleTesting[BusVerticle] with Matchers {
 
   "BusVerticle" should "reply to a message" in {
-    val res = Await.result(
-      vertx
+    val future = vertx
         .eventBus()
-        .sendFuture[String]("testAddress", "msg"),
-      10000 millis
-    )
+        .sendFuture[String]("testAddress", "msg")
 
-    res.body() should equal("Hello World!")
+    future.map(res => res.body() should equal("Hello World!"))
   }
 
 }
