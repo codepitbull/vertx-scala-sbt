@@ -1,7 +1,5 @@
 import sbt.Keys._
 import sbt._
-import sbtassembly.AssemblyPlugin.autoImport._
-import sbtassembly.PathList
 
 object Build extends AutoPlugin {
 

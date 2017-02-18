@@ -1,9 +1,7 @@
 import sbt.Package._
 import sbt._
-enablePlugins(DockerPlugin, JavaAppPackaging)
 
-dockerBaseImage := "frolvlad/alpine-oraclejdk8:slim"
-version in Docker := "latest"
+enablePlugins(DockerPlugin)
 
 scalaVersion := "2.12.1"
 
@@ -25,4 +23,17 @@ assemblyMergeStrategy in assembly := {
   case x =>
     val oldStrategy = (assemblyMergeStrategy in assembly).value
     oldStrategy(x)
+}
+
+dockerfile in docker := {
+  // The assembly task generates a fat JAR file
+  val artifact: File = assembly.value
+  val artifactTargetPath = s"/app/${artifact.name}"
+
+  new Dockerfile {
+    from("frolvlad/alpine-oraclejdk8:slim")
+    add(artifact, artifactTargetPath)
+    entryPoint("java", "-jar", artifactTargetPath)
+    expose(8666)
+  }
 }
