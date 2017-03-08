@@ -1,14 +1,12 @@
-#Getting vertx-lang-scala
+This is a quickstart for a Vert.x Scala project. It provides a few examples for doing 
+unit-tests.
 
-It's in Maven central, current version is 3.4.0.Beta1.
+It comes with vertx-core and vertx-web so you are good to go for a little REST-project.
+Take your time and take  a look 
 
-#Work with this project
-
-Create a runnable fat-jar
-```
-sbt assembly
-```
-
+#Scala console
+After launching _sbt_ you can switch to the _scala--console. There we took care that you
+get an already initialized Vert.x-instance and the necessary imports to start playing around.
 play around in sbt
 ```
 sbt
@@ -18,6 +16,17 @@ scala> vertx.deploymentIDs
 ```
 
 From here you can freely interact with the Vertx-API inside the sbt-scala-shell.
+
+
+#Fat-jar
+Take a look at the _build.sbt_ and search for the entry _packageOptions_. Enter the fully qualified class name 
+of your primary verticle. This will be used as entry point for a generated fat-jar.
+
+To create the runnable fat-jar use:
+```
+sbt assembly
+```
+
 
 #Dockerize
 The project also contains everything you need to create a Docker-container.
