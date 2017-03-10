@@ -1,4 +1,4 @@
-#THIS REPO IS OUTDATED THE OFFICIEAL VERSION IS NOW PART OF VERTX [vertx-sbt-starter](https://github.com/vert-x3/vertx-sbt-starter)
+#THIS REPO IS OUTDATED! THE OFFICIEAL VERSION IS NOW PART OF VERTX [vertx-sbt-starter](https://github.com/vert-x3/vertx-sbt-starter)
 
 This is a quickstart for a Vert.x Scala project. It provides a few examples for doing 
 unit-tests.
